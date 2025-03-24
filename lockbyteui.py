@@ -35,6 +35,9 @@ class App(ttk.Window):
         # application variables
         self.term_var = ttk.StringVar(value="md")
 
+        # settings variables
+        self.auto_sign = ttk.BooleanVar(value=False)
+
         # icons
         self.header_icon = button_image("checkup.png", (50, 50))
         self.setting_icon = button_image("settings.png")
@@ -186,6 +189,7 @@ class App(ttk.Window):
             search_frame,
             text="Check All Password",
             font=("Helvetica", 18),
+            bootstyle="light",
         )
         path_lbl.pack(padx=20, pady=20)
 
@@ -212,20 +216,117 @@ class App(ttk.Window):
     def create_settings_frame(self):
         """labelframe"""
 
-        self.settings_frame.grid_rowconfigure(0, weight=1)
-        self.settings_frame.grid_columnconfigure(1, weight=1)
+        self.settings_frame.grid_columnconfigure(0, weight=1)
+        self.settings_frame.grid_rowconfigure(7, weight=1)
 
-        search_frame = ttk.Frame(self.settings_frame)
-        search_frame.pack(fill=X, expand=YES, pady=15)
-        term_ent = ttk.Entry(search_frame, textvariable=self.term_var)
-        term_ent.pack(side=LEFT, fill=X, expand=YES, padx=5)
-        search_btn = ttk.Button(
-            search_frame,
-            text="Search",
-            bootstyle=OUTLINE,
-            width=8,
+        # Sign in automatically
+        sign_in_frame = ttk.Frame(self.settings_frame)
+        sign_in_label = ttk.Label(
+            sign_in_frame,
+            text="Automatically signs you in when possible.\nWhen off, you'll be asked for confirmation every time.",
         )
-        search_btn.pack(side=LEFT, padx=5)
+        sign_in_label.pack(side=LEFT, fill=X, expand=YES, padx=5)
+        sign_in_button = ttk.Checkbutton(
+            sign_in_frame,
+            variable=self.auto_sign,
+            onvalue=True,
+            offvalue=False,
+            bootstyle="sucess, round-toggle",
+        )
+        sign_in_button.pack(side=LEFT, padx=5)
+        sign_in_frame.grid(row=0, column=0, sticky=EW, padx=2, pady=2)
+
+        # Auto Bypass Password Validation
+        auto_bypass_frame = ttk.Frame(self.settings_frame)
+        auto_bypass_label = ttk.Label(
+            auto_bypass_frame,
+            text="Automatically signs you in when possible.\nWhen off, you'll be asked for confirmation every time.",
+        )
+        auto_bypass_label.pack(side=LEFT, fill=X, expand=YES, padx=5)
+        auto_bypass_button = ttk.Checkbutton(
+            auto_bypass_frame,
+            variable=self.auto_sign,
+            onvalue=True,
+            offvalue=False,
+            bootstyle="sucess, round-toggle",
+        )
+        auto_bypass_button.pack(side=LEFT, padx=5)
+        auto_bypass_frame.grid(row=1, column=0, sticky=EW, padx=2, pady=2)
+
+        # Maximum Password Lenght
+        max_lenght_frame = ttk.Frame(self.settings_frame)
+        auto_bypass_label = ttk.Label(
+            max_lenght_frame,
+            text="Automatically signs you in when possible.\nWhen off, you'll be asked for confirmation every time.",
+        )
+        auto_bypass_label.pack(side=LEFT, fill=X, expand=YES, padx=5)
+        auto_bypass_button = ttk.Button(
+            max_lenght_frame,
+            text="Click",
+            bootstyle="sucess",
+        )
+        auto_bypass_button.pack(side=LEFT, padx=5)
+        max_lenght_frame.grid(row=2, column=0, sticky=EW, padx=2, pady=2)
+
+        # Minimum Password Lenght
+        min_lenght_frame = ttk.Frame(self.settings_frame)
+        auto_bypass_label = ttk.Label(
+            min_lenght_frame,
+            text="Automatically signs you in when possible.\nWhen off, you'll be asked for confirmation every time.",
+        )
+        auto_bypass_label.pack(side=LEFT, fill=X, expand=YES, padx=5)
+        auto_bypass_button = ttk.Button(
+            min_lenght_frame,
+            text="Click",
+            bootstyle="sucess",
+        )
+        auto_bypass_button.pack(side=LEFT, padx=5)
+        min_lenght_frame.grid(row=3, column=0, sticky=EW, padx=2, pady=2)
+
+        # Import passwords
+        import_frame = ttk.Frame(self.settings_frame)
+        auto_bypass_label = ttk.Label(
+            import_frame,
+            text="Automatically signs you in when possible.\nWhen off, you'll be asked for confirmation every time.",
+        )
+        auto_bypass_label.pack(side=LEFT, fill=X, expand=YES, padx=5)
+        auto_bypass_button = ttk.Button(
+            import_frame,
+            text="Select File",
+            bootstyle="sucess",
+        )
+        auto_bypass_button.pack(side=LEFT, padx=5)
+        import_frame.grid(row=4, column=0, sticky=EW, padx=2, pady=2)
+
+        # Export passwords
+        export_frame = ttk.Frame(self.settings_frame)
+        auto_bypass_label = ttk.Label(
+            export_frame,
+            text="Automatically signs you in when possible.\nWhen off, you'll be asked for confirmation every time.",
+        )
+        auto_bypass_label.pack(side=LEFT, fill=X, expand=YES, padx=5)
+        auto_bypass_button = ttk.Button(
+            export_frame,
+            text="Download File",
+            bootstyle="sucess",
+        )
+        auto_bypass_button.pack(side=LEFT, padx=5)
+        export_frame.grid(row=5, column=0, sticky=EW, padx=2, pady=2)
+
+        # Delete all LockByte data
+        delete_frame = ttk.Frame(self.settings_frame)
+        auto_bypass_label = ttk.Label(
+            delete_frame,
+            text="Automatically signs you in when possible.\nWhen off, you'll be asked for confirmation every time.",
+        )
+        auto_bypass_label.pack(side=LEFT, fill=X, expand=YES, padx=5)
+        auto_bypass_button = ttk.Button(
+            delete_frame,
+            text="Delete Data",
+            bootstyle="sucess",
+        )
+        auto_bypass_button.pack(side=LEFT, padx=5)
+        delete_frame.grid(row=6, column=0, sticky=EW, padx=2, pady=2)
 
 
 if __name__ == "__main__":
