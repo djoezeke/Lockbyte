@@ -26,6 +26,7 @@ class App(ttk.Window):
         self.title("LockByte")
         self.geometry("700x600")
         self.style.theme_use("flatly")
+        self.resizable(False, False)
 
         # set grid layout 2x2
         self.grid_rowconfigure(1, weight=1)
@@ -67,17 +68,23 @@ class App(ttk.Window):
         """select frame by name"""
 
         if name == "passwords":
-            self.passwords_frame.grid(row=1, column=1, sticky=NSEW, pady=(25, 0))
+            self.passwords_frame.grid(
+                row=1, column=1, sticky=NSEW, padx=(2, 2), pady=(2, 2)
+            )
         else:
             self.passwords_frame.grid_forget()
 
         if name == "checkup":
-            self.checkup_frame.grid(row=1, column=1, sticky=NSEW, pady=(25, 0))
+            self.checkup_frame.grid(
+                row=1, column=1, sticky=NSEW, padx=(2, 2), pady=(2, 2)
+            )
         else:
             self.checkup_frame.grid_forget()
 
         if name == "settings":
-            self.settings_frame.grid(row=1, column=1, sticky=NSEW, pady=(25, 0))
+            self.settings_frame.grid(
+                row=1, column=1, sticky=NSEW, padx=(2, 2), pady=(2, 2)
+            )
         else:
             self.settings_frame.grid_forget()
 
@@ -149,14 +156,17 @@ class App(ttk.Window):
 
     def create_passwords_frame(self):
         """labelframe"""
-        term_row = ttk.Frame(self.passwords_frame)
-        term_row.pack(fill=X, expand=YES, pady=15)
-        term_ent = ttk.Entry(term_row, textvariable=self.term_var)
+
+        self.passwords_frame.grid_rowconfigure(0, weight=1)
+        self.passwords_frame.grid_columnconfigure(2, weight=1)
+
+        search_frame = ttk.Frame(self.passwords_frame)
+        search_frame.pack(fill=X, expand=YES, pady=15)
+        term_ent = ttk.Entry(search_frame, textvariable=self.term_var)
         term_ent.pack(side=LEFT, fill=X, expand=YES, padx=5)
         search_btn = ttk.Button(
-            master=term_row,
+            master=search_frame,
             text="Search",
-            # command=self.on_search,
             bootstyle=OUTLINE,
             width=8,
         )
@@ -164,31 +174,54 @@ class App(ttk.Window):
 
     def create_checkup_frame(self):
         """labelframe"""
-        term_row = ttk.Frame(self.checkup_frame)
-        term_row.pack(fill=X, expand=YES, pady=15)
-        search_btn = ttk.Button(
-            master=self.checkup_frame,
-            text="Check",
-            bootstyle=OUTLINE,
-            width=8,
+
+        # set grid layout 1x4
+        self.checkup_frame.grid_rowconfigure(3, weight=1)
+        self.checkup_frame.grid_columnconfigure(0, weight=1)
+
+        search_frame = ttk.Frame(self.checkup_frame, bootstyle="light")
+        search_frame.grid(row=0, column=0, sticky=EW, padx=2, pady=2)
+
+        path_lbl = ttk.Label(
+            search_frame,
+            text="Check All Password",
+            font=("Helvetica", 18),
         )
-        search_btn.pack(side=LEFT, padx=5)
+        path_lbl.pack(padx=20, pady=20)
+
+        search_btn = ttk.Button(search_frame, text="Check", width=10)
+        search_btn.pack(pady=20, padx=20)
+
+        search_frame = ttk.Frame(self.checkup_frame, height=150)
+        search_frame.grid(row=1, column=0, sticky=EW, padx=2, pady=2)
+
+        container = ttk.Labelframe(self.checkup_frame, text="Check Password Strenght")
+        container.grid(row=2, column=0, sticky=EW, padx=50, pady=2)
+
+        ent = ttk.Entry(container, textvariable="password")
+        ent.pack(padx=100, pady=20, fill=X)
+
+        lbl = ttk.Button(master=container, text="password", width=10)
+        lbl.pack(padx=20, pady=20)
+
         progressbar = ttk.Progressbar(
             master=self.checkup_frame, mode=INDETERMINATE, bootstyle=(STRIPED, SUCCESS)
         )
-        progressbar.pack(fill=X, expand=YES)
+        progressbar.grid(row=3, column=0, sticky=EW, padx=2, pady=2)
 
     def create_settings_frame(self):
         """labelframe"""
 
-        term_row = ttk.Frame(self.settings_frame)
-        term_row.pack(fill=X, expand=YES, pady=15)
-        term_ent = ttk.Entry(term_row, textvariable=self.term_var)
+        self.settings_frame.grid_rowconfigure(0, weight=1)
+        self.settings_frame.grid_columnconfigure(1, weight=1)
+
+        search_frame = ttk.Frame(self.settings_frame)
+        search_frame.pack(fill=X, expand=YES, pady=15)
+        term_ent = ttk.Entry(search_frame, textvariable=self.term_var)
         term_ent.pack(side=LEFT, fill=X, expand=YES, padx=5)
         search_btn = ttk.Button(
-            master=term_row,
+            search_frame,
             text="Search",
-            # command=self.on_search,
             bootstyle=OUTLINE,
             width=8,
         )
