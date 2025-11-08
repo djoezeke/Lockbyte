@@ -1,0 +1,120 @@
+[build-system]
+requires = ["uv_build>=0.8.15,<0.9.0"]
+build-backend = "uv_build"
+
+[project]
+name = "lockbyte"
+version = "0.1.0"
+description = "Python Game Development Engine (Pygame-based)."
+long_description = "A modern Customizable Pygame Game engine."
+long_description_content_type = "text/markdown"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "Sackey Ezekiel Etrue", email = "sackeyetrue@gmail.com" },
+  {name = "Xodex Contributers"},
+]
+maintainers = [
+  { name = "Sackey Ezekiel Etrue", email = "sackeyetrue@gmail.com" },
+]
+keywords = [
+  "pygame", "game engine", "2d", "lockbyte", "games", "engine", "framework"
+]
+classifiers = [
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Games/Entertainment",
+  "Topic :: Multimedia :: Graphics",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Operating System :: Microsoft :: Windows",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = []
+
+[project.scripts]
+lockbyte = "lockbyte.__main__:execute_from_command_line"
+
+[project.urls]
+Homepage = "https://github.com/djoezeke/lockbyte"
+Documentation = "https://github.com/djoezeke/lockbyte#readme"
+Issues = "https://github.com/djoezeke/lockbyte/issues"
+"Release Notes" = "https://github.com/djoezeke/lockbyte/releases"
+Source = "https://github.com/djoezeke/lockbyte"
+
+[project.optional-dependencies]
+standard = [
+    "pyside6",
+]
+
+[dependency-groups]
+dev = [
+    # We add lockbyte[standard] so `uv sync` considers the extras.
+    "lockbyte[standard]",
+    "ruff",   # format & check
+    "pytest", # testing
+    "twine",  # check dist
+]
+docs = [
+    "mkdocs==1.6.1",
+    "mkdocs-material==9.6.13",
+    "mkdocstrings-python==1.16.12",
+    "mkdocs-llmstxt==0.2.0",
+]
+
+[tool.uv]
+package = true 
+default-groups = ["dev", "docs"]
+
+[tool.uv.build-backend]
+module-name = "lockbyte"
+module-root = ""
+source-include = ["*.md",]
+source-exclude = ["tests/",]
+wheel-exclude = ["*.bin"]
+namespaces = false
+
+# Configure Ruff's linting rules
+[tool.ruff]
+src = ["lockbyte", "tests"]
+fix = true
+show-fixes = true
+output-format = "full"
+line-length = 120 
+
+# Further linting configurations
+[tool.ruff.lint]
+unfixable = [
+    "F841", # Example: prevent fixing of unused local variables
+]
+select = [
+    "B",  # flake8-bugbear
+    "E",  # pycodestyle error
+    "F",  # pyflakes
+    "I",  # isort
+    "UP", # pyupgrade
+    "W",  # pycodestyle warning
+]
+ignore = [
+    "E501",  # ignore line length errors
+]
+
+
+[tool.ruff.lint.isort]
+force-single-line = true
+order-by-type = false
+combine-as-imports = true
+split-on-trailing-comma = true
+known-first-party = ["lockbyte"]
+known-third-party = ["pyside6"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+# Configure Ruff's formatter
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
